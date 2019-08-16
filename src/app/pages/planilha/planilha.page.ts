@@ -37,17 +37,17 @@ export class PlanilhaPage implements OnInit {
     private activatedRoute: ActivatedRoute) {
     this.planilhaId = this.activatedRoute.snapshot.params['id'];
     this.planilhadetalhesSubscription = this.planilhadetalhesService.getPlanilhadetalhes(this.planilhaId).subscribe(data => { this.planilhadetalhes = data });
-    this.criardetalhe(this.planilhaId);
+    /*this.criardetalhe(this.planilhaId);*/
   }
   ngOnInit() {
 
   }
-  async criardetalhe(id: string) {
+ /* async criardetalhe(id: string) {
     return this.planilhasCollection.doc<Planilha>(id).valueChanges();
-  }
+  }*/
   ngOnDestroy() {
     this.planilhadetalhesSubscription.unsubscribe();
-    this.planilhaSubscription.unsubscribe();
+
   }
   async logout() {
     try {
