@@ -1,22 +1,27 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Planilha } from 'src/app/interface/planilha';
 import { AuthService } from 'src/app/services/auth.service';
 import { Planilhadetalhe } from './../interface/planilhadetalhe';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PlanilhadetalheService {
+  private idPlanilha:string;
   private planilhadetalhesCollection: AngularFirestoreCollection<Planilhadetalhe>;  
-  constructor(private afs: AngularFirestore,   private AuthService: AuthService) {
-    
-
+  constructor(private afs: AngularFirestore,   
+    private AuthService: AuthService,
+    private router:ActivatedRoute) {
+  this.idPlanilha= this.router.snapshot.queryParamMap.get('id');
+  this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes',ref=> ref.where('planilhaId','==', this.idPlanilha));
+     
   }
+ 
   getPlanilhadetalhes() {
-
-    this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes',ref=> ref.where('planilhaId','==','DjdMiaZxRpwsTOxRdB2o'));
-        return this.planilhadetalhesCollection.snapshotChanges().pipe(
+     return this.planilhadetalhesCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();

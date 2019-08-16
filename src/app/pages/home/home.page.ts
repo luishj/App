@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
 import { PlanilhaService } from './../../services/planilha.service';
@@ -20,12 +21,18 @@ export class HomePage implements OnInit {
   constructor(private planilhasService:PlanilhaService,
     private AuthService:AuthService,
     private loadingCtrl:LoadingController,
-    private toastCtrl:ToastController) { 
+    private toastCtrl:ToastController,
+    private ActivatedRoute:ActivatedRoute,
+    private router:Router) { 
     this.planilhasSubscription = this.planilhasService.getPlanilhas().subscribe(data =>{this.planilhas = data});
     }
 
 
   ngOnInit() {
+  }
+  chamardetalhe(id:string){
+   this.router.navigate(['planilha/:id'], {queryParams:{id:id}});
+
   }
   ngOnDestroy() {
     this.planilhasSubscription.unsubscribe();
