@@ -18,11 +18,11 @@
       <ion-col>G. em %</ion-col>
       <ion-col>B. Final</ion-col>
     </ion-row>
-
-    <ion-row *ngFor="let planilhadetalhe of planilhadetalhes" [routerLink]="['/planilhadetalhe', planilhadetalhe.id]" >
+    
+    <ion-row *ngFor="let planilhadetalhe of planilhadetalhes" [routerLink]="['/planilhadetalhe', planilhadetalhe.id, planilhadetalhe]" >
      
         <ion-col size="1">{{planilhadetalhe.dia}}</ion-col>
-        <ion-col>{{1150| currency: 'BRL' }}</ion-col>
+        <ion-col>{{planilhadetalhe.bancainicial | currency: 'BRL' }}</ion-col>
         <ion-col>3%</ion-col>
         <ion-col>{{35| currency: 'BRL' }}</ion-col>
         <ion-col>{{planilhadetalhe.ganho| currency: 'BRL' }}</ion-col>

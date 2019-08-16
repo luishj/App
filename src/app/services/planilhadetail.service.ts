@@ -10,18 +10,17 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PlanilhadetalheService {
-  private idPlanilha:string;
-  private planilhadetalhesCollection: AngularFirestoreCollection<Planilhadetalhe>;  
-  constructor(private afs: AngularFirestore,   
+
+  private planilhadetalhesCollection: AngularFirestoreCollection<Planilhadetalhe>;
+  constructor(private afs: AngularFirestore,
     private AuthService: AuthService,
-    private router:ActivatedRoute) {
-  this.idPlanilha= this.router.snapshot.queryParamMap.get('id');
-  this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes',ref=> ref.where('planilhaId','==', this.idPlanilha));
-     
+    private router: ActivatedRoute) {
   }
- 
-  getPlanilhadetalhes() {
-     return this.planilhadetalhesCollection.snapshotChanges().pipe(
+
+  getPlanilhadetalhes(idPlanilha: string) {
+    this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes', ref => ref.where('planilhaId', '==', idPlanilha).orderBy('dia', 'asc'));
+
+    return this.planilhadetalhesCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -32,15 +31,13 @@ export class PlanilhadetalheService {
     )
   }
   addPlanilhadetalhe(planilhadetalhe: Planilhadetalhe) {
-    this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes');
     return this.planilhadetalhesCollection.add(planilhadetalhe);
   }
   getPlanilhadetalhe(id: string) {
-    this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes');
     return this.planilhadetalhesCollection.doc<Planilhadetalhe>(id).valueChanges();
   }
   updatePlanilhadetalhe(id: string, planilhadetalhe: Planilhadetalhe) {
-    this.planilhadetalhesCollection = this.afs.collection<Planilhadetalhe>('Planilhadetalhes');
+    planilhadetalhe.dia =  +planilhadetalhe.dia;
     return this.planilhadetalhesCollection.doc<Planilhadetalhe>(id).update(planilhadetalhe);
   }
   deletePlanilhadetalhe(id: string) { return this.planilhadetalhesCollection.doc(id).delete() }

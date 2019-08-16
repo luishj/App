@@ -14,16 +14,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./details.page.scss'],
 })
 export class DetailsPage implements OnInit {
-  private planilhadetalgeId:string = null;
-  private planilhadetalhe:Planilhadetalhe;
-  private planilhadetalheSubscription:Subscription;
   private planilhaId: string = null;
   public planilha: Planilha = {};
   private loading: any;
   private planilhaSubscription: Subscription;
 
   constructor(
-    private planilhadetalheService:PlanilhadetalheService,
+
     private planilhaService: PlanilhaService,
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
@@ -46,8 +43,10 @@ export class DetailsPage implements OnInit {
 
   loadPlanilha() {    
     this.planilhaSubscription = this.planilhaService.getPlanilha(this.planilhaId).subscribe(data => {
-      this.planilha = data;
+      this.planilha = data;     
     });
+ 
+
   }
 
   async savePlanilha() {
@@ -60,7 +59,7 @@ export class DetailsPage implements OnInit {
         await this.planilhaService.updatePlanilha(this.planilhaId, this.planilha);
         await this.loading.dismiss();
 
-        this.navCtrl.navigateBack('/home');
+        this.navCtrl.navigateForward('/home');
       } catch (error) {
         this.presentToast('Erro ao tentar salvar');
         this.loading.dismiss();
@@ -72,7 +71,7 @@ export class DetailsPage implements OnInit {
         await this.planilhaService.addPlanilha(this.planilha);
         await this.loading.dismiss();
 
-        this.navCtrl.navigateBack('/home');
+        this.navCtrl.navigateForward('/home');
       } catch (error) {
         this.presentToast('Erro ao tentar salvar');
         this.loading.dismiss();

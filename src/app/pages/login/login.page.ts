@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, ToastController, LoadingController } from '@ionic/angular';
+import { IonSlides, ToastController, LoadingController, NavController } from '@ionic/angular';
 import { User } from 'src/app/interface/user';
 
 @Component({
@@ -16,7 +16,8 @@ export class LoginPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private authService: AuthService
+    private authService: AuthService,
+    private navCtrl:NavController
   ) { }
 
   ngOnInit() {
@@ -33,8 +34,9 @@ export class LoginPage implements OnInit {
   async login() {
     await this.presentLoading();
     try {
-      console.log(this.userRegister);
+      this.navCtrl.navigateForward('/home');
       await this.authService.login(this.userLogin);
+
     } catch (error) {
       console.error(error);
       this.presentToast(error.message);
@@ -46,7 +48,6 @@ export class LoginPage implements OnInit {
   async  register() {
     await this.presentLoading();
     try {
-      console.log(this.userRegister);
       await this.authService.register(this.userRegister);
     } catch (error) {
       console.error(error);

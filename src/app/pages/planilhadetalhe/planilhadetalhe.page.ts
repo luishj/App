@@ -1,3 +1,4 @@
+import { Planilha } from './../../interface/planilha';
 import { Component, OnInit } from '@angular/core';
 import { PlanilhadetalheService } from 'src/app/services/planilhadetail.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +16,7 @@ export class PlanilhadetalhePage implements OnInit {
   private planilhadetalheId: string = null;
   public planilhadetalhe: Planilhadetalhe = {};
   private loading: any;
+  private planilhaId:string;
   private planilhadetalheSubscription: Subscription;
 
   constructor(
@@ -26,7 +28,7 @@ export class PlanilhadetalhePage implements OnInit {
     private toastCtrl: ToastController
   ) {
     this.planilhadetalheId = this.activatedRoute.snapshot.params['id'];
-
+    this.planilhaId = this.activatedRoute.snapshot.params['planilhaId'];
     if (this.planilhadetalheId) this.loadPlanilhadetalhe();
   }
 
@@ -45,15 +47,16 @@ export class PlanilhadetalhePage implements OnInit {
   async savePlanilhadetalhe() {
     await this.presentLoading();
 
-    this.planilhadetalhe.planilhaId = this.authService.getAuth().currentUser.uid;
+    this.planilhadetalhe.planilhaId = this.planilhaId;
 
     if (this.planilhadetalheId) {
       try {
-    
+       
+
         await this.planilhadetalheService.updatePlanilhadetalhe(this.planilhadetalheId, this.planilhadetalhe);
         await this.loading.dismiss();
 
-        this.navCtrl.navigateBack('/home');
+        this.navCtrl.navigateForward('/planilha/'+this.planilhaId);
       } catch (error) {
         console.error(error);
         this.presentToast('Erro ao tentar salvar');
@@ -67,7 +70,7 @@ export class PlanilhadetalhePage implements OnInit {
         await this.planilhadetalheService.addPlanilhadetalhe(this.planilhadetalhe);
         await this.loading.dismiss();
 
-        this.navCtrl.navigateBack('/home');
+        this.navCtrl.navigateForward('/home');
       } catch (error) {
 
         this.presentToast('Erro ao tentar salvar');
