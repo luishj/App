@@ -12,6 +12,8 @@ export class LoginPage implements OnInit {
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
   public userLogin: User = {};
   public userRegister: User = {};
+  public fundoposition:number = 0;
+  public fundodiference:number = 150;
   private loading: any;
   constructor(
     private loadingCtrl: LoadingController,
@@ -25,9 +27,10 @@ export class LoginPage implements OnInit {
   segmentChanged(event: any) {
     if (event.detail.value === "login") {
       this.slides.slidePrev();
-
+      this.fundoposition += this.fundodiference;
     } else {
       this.slides.slideNext();
+      this.fundoposition -= this.fundodiference;
 
     }
   }

@@ -1,50 +1,54 @@
 <ion-content class="swiper-no-swiping">
 
-  <div class="contentall">
-    <div class="segment">
-      <ion-segment (ionChange)="segmentChanged($event)" value="login">
-        <ion-segment-button value="login">
-          <ion-label>Login</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="cadastrar">
-          <ion-label>Cadastrar</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </div>
-    <ion-slides #slider>
-      <ion-slide>
-        <div class="slide-inner ion-padding">
-          <span>Login</span>
-          <ion-item class="ion-margin-top" lines="none">
-            <ion-input type="email" placeholder="E-Mail" [(ngModel)]="userLogin.email"></ion-input>
-          </ion-item>
-          <ion-item class="ion-margin-top" lines="none">
-            <ion-input type="password" placeholder="Senha" [(ngModel)]="userLogin.password"></ion-input>
-          </ion-item>
-          <ion-button class="ion-margin-top button-login" (click)="login()" color="--ion-color-button" expand="block">Entrar
-          </ion-button>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="slide-inner ion-padding">
-          <span>Cadastrar</span>
-          <ion-item class="ion-margin-top" lines="none">
-            <ion-input type="nome0" placeholder="Nome" ></ion-input>
-          </ion-item>
-          <ion-item class="ion-margin-top" lines="none">
-            <ion-input type="email" placeholder="E-Mail" [(ngModel)]="userRegister.email"></ion-input>
-          </ion-item>
-          <ion-item class="ion-margin-top" lines="none">
-            <ion-input type="password" placeholder="Senha" [(ngModel)]="userRegister.password"></ion-input>
-          </ion-item>
-          <ion-button class="ion-margin-top button-login" (click)="register()" color="--ion-color-button" expand="block">
-            Cadastrar</ion-button>
-        </div>
-      </ion-slide>
-    </ion-slides>
+  <div class="contentall" [ngStyle]="{'background-position-x': fundoposition + 'px'}">
+    <div class="contentcenter">
+      <div class="segment">
+        <ion-segment (ionChange)="segmentChanged($event)" value="login">
+          <ion-segment-button value="login">
+            <ion-label>Login</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="cadastrar">
+            <ion-label>Cadastrar</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <ion-slides #slider>
+        <ion-slide>
+          <div class="slide-inner ion-padding">
+            <span>Login</span>
+            <ion-item class="ion-margin-top" lines="none">
+              <ion-input type="email" placeholder="E-Mail" [(ngModel)]="userLogin.email"></ion-input>
+            </ion-item>
+            <ion-item class="ion-margin-top" lines="none">
+              <ion-input type="password" placeholder="Senha" [(ngModel)]="userLogin.password"></ion-input>
+            </ion-item>
+            <ion-button class="ion-margin-top button-login" (click)="login()" color="--ion-color-button" expand="block">
+              Entrar
+            </ion-button>
+          </div>
+        </ion-slide>
+        <ion-slide>
+          <div class="slide-inner ion-padding">
+            <span>Cadastrar</span>
+            <ion-item class="ion-margin-top" lines="none">
+              <ion-input type="nome0" placeholder="Nome"></ion-input>
+            </ion-item>
+            <ion-item class="ion-margin-top" lines="none">
+              <ion-input type="email" placeholder="E-Mail" [(ngModel)]="userRegister.email"></ion-input>
+            </ion-item>
+            <ion-item class="ion-margin-top" lines="none">
+              <ion-input type="password" placeholder="Senha" [(ngModel)]="userRegister.password"></ion-input>
+            </ion-item>
+            <ion-button class="ion-margin-top button-login" (click)="register()" color="--ion-color-button"
+              expand="block">
+              Cadastrar</ion-button>
+          </div>
+        </ion-slide>
+      </ion-slides>
 
-    <div class="container ion-text-center">
+      <div class="container ion-text-center">
 
+      </div>
     </div>
   </div>
 </ion-content>

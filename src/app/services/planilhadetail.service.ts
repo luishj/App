@@ -1,6 +1,3 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { Planilha } from 'src/app/interface/planilha';
-import { AuthService } from 'src/app/services/auth.service';
 import { Planilhadetalhe } from './../interface/planilhadetalhe';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -12,9 +9,8 @@ import { map } from 'rxjs/operators';
 export class PlanilhadetalheService {
 
   private planilhadetalhesCollection: AngularFirestoreCollection<Planilhadetalhe>;
-  constructor(private afs: AngularFirestore,
-    private AuthService: AuthService,
-    private router: ActivatedRoute) {
+  constructor(private afs: AngularFirestore) {
+
   }
 
   getPlanilhadetalhes(idPlanilha: string) {

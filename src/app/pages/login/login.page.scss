@@ -2,7 +2,9 @@
     width: 100%;
     height: 100%;
     padding-top:35%;
-    background: linear-gradient(197deg, #ffffff 0%, #ffffff 13.5%, #ebf8ff 33.33%, #bbafff 100%) !important;
+    background-image: url('/assets/img/negocios-ibovespa.png');
+    transition: all 0.5s;
+    //background: linear-gradient(197deg, #ffffff 0%, #ffffff 13.5%, #ebf8ff 33.33%, #bbafff 100%) !important;
 }
 .button-login{
     background: #aabbff!important;

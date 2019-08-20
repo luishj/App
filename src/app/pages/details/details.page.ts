@@ -66,6 +66,7 @@ export class DetailsPage implements OnInit {
       }
     } else {
       this.planilha.createdAt = new Date().getTime();
+      this.planilha.criada= false;
 
       try {
         await this.planilhaService.addPlanilha(this.planilha);

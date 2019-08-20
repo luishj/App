@@ -20,31 +20,61 @@ export class PlanilhaPage implements OnInit {
 
 
   private planilhaa = new Array<Planilha>();
-  private planilhadetalhes = new Array<Planilhadetalhe>();
-  private planilhaSubscription: Subscription;
-  private planilhasCollection: AngularFirestoreCollection<Planilha>;  
-  private planilhadetalhesSubscription: Subscription;
+  public planilhadetalhes = new Array<Planilhadetalhe>();
+  private planilhadetalhe: Planilhadetalhe = {};
+  public planilhadetalhesSubscription: Subscription;
   private loading: any;
   public planilha: Planilha = {};
   private planilhaId: string;
+  private vlrbanca:number;
+  private porcentagemdia:number;
+  private planilhacriada:string;
+
 
   constructor(
-    private planilhaService: PlanilhaService,
+    private planilhaService: PlanilhaService,    
+    private planilhadetalheService: PlanilhadetalheService,    
     private planilhadetalhesService: PlanilhadetalheService,
     private AuthService: AuthService,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private activatedRoute: ActivatedRoute) {
-    this.planilhaId = this.activatedRoute.snapshot.params['id'];
+      console.log(this.activatedRoute.snapshot.queryParamMap);
+    this.planilhaId = this.activatedRoute.snapshot.queryParamMap.get('id');
+    this.vlrbanca= this.activatedRoute.snapshot.params['valorbanca'];
+    this.porcentagemdia =this.activatedRoute.snapshot.params['porcentagemdia'];
+    this.planilhacriada =this.activatedRoute.snapshot.params['criada'];
+
     this.planilhadetalhesSubscription = this.planilhadetalhesService.getPlanilhadetalhes(this.planilhaId).subscribe(data => { this.planilhadetalhes = data });
-    /*this.criardetalhe(this.planilhaId);*/
+    this.criardetalhe(this.planilhaId,this.planilhacriada,this.porcentagemdia, this.vlrbanca);
   }
   ngOnInit() {
 
   }
- /* async criardetalhe(id: string) {
-    return this.planilhasCollection.doc<Planilha>(id).valueChanges();
-  }*/
+  async criardetalhe(id: string,criada:string,porcentagem:number,vlrbanca:number) {
+
+      if(criada === "fdsadaalse"){
+     
+        await this.presentLoading();
+        try {
+          for (let i = 1; i <= 30; i++) {
+            this.planilhadetalhe.dia = i;
+            this.planilhadetalhe.bancainicial = vlrbanca;
+            this.planilhadetalhe.planilhaId = id;
+            this.planilhadetalhe.porcentagemdia= porcentagem;
+            this.planilhadetalhe.ganho = 0;
+            await this.planilhadetalheService.addPlanilhadetalhe(this.planilhadetalhe);            
+          }
+          await this.loading.dismiss();
+        } catch (error) {
+          console.error(error);
+  
+          this.presentToast('Erro ao tentar salvar');
+          this.loading.dismiss();
+        }
+  
+      }  
+  }
   ngOnDestroy() {
     this.planilhadetalhesSubscription.unsubscribe();
 
